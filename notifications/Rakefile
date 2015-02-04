@@ -1,0 +1,27 @@
+require 'bundler'
+require 'rake'
+require 'rspec/core/rake_task'
+require 'fileutils'
+
+# Loads the environment with the corresponding stage settings.
+task :build, [:stage] do |t, args|
+  args.with_defaults(:stage => 'development')
+  ENV['RACK_ENV'] = args[:stage]
+  Bundler.require(:default, args.stage)
+  require './config/application'
+end
+
+# Initializes the Sinatra server for the given stage
+task :start_server, [:stage] do |t, args|
+  args.with_defaults(:stage => 'development')
+  Rake::Task[:build].invoke(args.stage)
+  NotificationsService.run!
+end
+
+# Executes the RSpec tests
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = "--format documentation"
+end
+
+task :test => [:spec]
+task :default => [:start_server]

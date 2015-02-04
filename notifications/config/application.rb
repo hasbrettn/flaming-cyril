@@ -41,7 +41,7 @@ class NotificationsService < Sinatra::Application
   load_directory!('./controllers/**/*.rb')
   load_directory!('./apis/**/*.rb')
 
-  # 6.) Define Routes
+  # 4.) Define Routes
 
   # TODO: Flush this out into some sort of route loader
   get '/notifications/find' do

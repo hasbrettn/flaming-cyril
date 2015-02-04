@@ -1,0 +1,19 @@
+I had actually never built a web service with Sinatra before this so this was a lot of fun. Below are some of the rationalizations I made about the design and requirements as well as what I would change if I had more time.
+
+What I would change:
+
+-- The Find API could be expanded upon as far as query language. The requirements did not specify so I did not both building any specific queryable fields into the API. It simply returns all the notifications. This is not scalable as number of notifications grows. It should require some level of filtering, but for this simple use-case it works.
+
+-- The Create API needs more validation and to be hardened a bit with better error handling. Specifically, I would add validation for image url and email address as well as a character length for the other string fields. Right now, it simply validates that the attribute exist. Also, the error handling is simplistic and will have unexpected results if bad JSON is passed in.
+
+Design:
+
+-- I am not a huge fan of RESTful in the classic sense. I prefer a true JSON to JSON service experience where you can expand and make the service call more clear to your consumers. Specifically, I would call the API something like FindNotifications and wrap the request object in a FindNotificationsRequest and it would return a FindNotificationsResponse. I think this is a bit clearer API design for the consumer and allows for each an easier validation of the input request. In this application, I kept the APIs as simple as possible because that is waht the use-case called for. 
+
+-- I chose to use SQLite as the data store for simplicity sake, but this obviously would not scale. I would choose either a MySQL instance or a NoSQL solution such as DynamoDB as the use-case is so simple. Since the service is simply read / write bound, the scaling issues of concern would revolve around the number of asynchronous connections to your data store and the complexity of your queries.
+
+-- I simply used the Sinatra commands as controllers for ease, but this design lends itself to an MVC pattern and you could easily map the request processing of Sinatra to some simple controllers. 
+
+-- For mapping my data to the database, I chose to utilize the classic ruby to_hash, to_json, from_json, from_hash for marshalling data back and forth. This is easy to do as the models are only four attributes, but as they grow more complex I would probably lean toward a builder pattern. I brought in ActiveRecord for easy validations.
+
+-- For Testing, I brought in my favorites -- RSpec, FactoryGirl, Faker, and DB Cleaner -- for easy generation of test data.

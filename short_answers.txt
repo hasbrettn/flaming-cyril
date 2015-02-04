@@ -1,0 +1,19 @@
+1.) What does O(N) mean? O(N^2)? 
+
+O(N) is Big-O notation to describe an algorithm's runtime efficiency. O(N) is notation for a linear function meaning that as the input size increases the runtime increases linearly. O(N^2) means that as the input size increases the runtime increases at a rate of N^2. The O stands for order of so you say it like Order of N^2.
+
+2.) Describe the quick sort algorithm.
+
+The idea behind quick sort is basically to pick a pivot point in the middle of a list, then sort the list by moving everything less than the pivot value to one side and everything greater than the pivot to the other. Then take each each side independently, pick a pivot and repeat the same process until you can no longer break it into smaller parts. The list is now sorted. The Big-O as pointed out in number one is O(n log n). The key to a good quick sort algorithm is choosing the pivot point. If you choose a pivot point that is on one end of the spectrum of numbers in the list or the other, you could wind up with a poor runtime.
+
+3.) In C, what is a pointer?
+
+A pointer in C is a way of storing a memory address or as the name says a pointer to a memory address. It can be a pointer to an object on heap memory or an object on the stack depending on the allocation.
+
+4.) What is the difference in stack vs. heap memory?
+
+Stack and Heap refer to different parts of a computers memory. In programming, stack is quickly accessible memory that does not have to be managed by the user. Entites like temporary local variables within function scopes are usually stored here and then freed by the CPU. Heap memory refers to the section of memory that is not managed by the CPU. If memory is allocated here, it must be deallocated by the creator.
+
+5.) What is the purpose of a garbage collector?
+
+Garbage collection is the process of reallocating Heap memory that was once allocated. The idea is that once a memory block has been allocated and then falls out of scope it can be reclaimed and resued by the CPU. Lower level programming languages such as C do not have this automatic functionality built in. Higher level languages like Java utilize Garbage Collection to abstract away memory management to make things easier for the programmer.
